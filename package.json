@@ -1,12 +1,12 @@
 {
-  "name": "p5-dev-web-kanap-master",
+  "name": "kanap",
   "version": "1.0.0",
-  "description": "This is the front end and back end server for Project 5 of the Web Developer path.",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "proxy" : "http://localhost:3000"
 }
