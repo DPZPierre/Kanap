@@ -14,7 +14,10 @@ fetch("http://localhost:3000/api/products")
           </article>
         </a>
         `
-    }});
+    }})
+    .catch(function (err) {
+      console.log(err);
+    });
 
 
 

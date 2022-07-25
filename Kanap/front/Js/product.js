@@ -2,18 +2,23 @@ const parsedUrl= new URL (window.location.href)
 const productId = parsedUrl.searchParams.get("id")
 const url = "http://localhost:3000/api/products/"
 const productUrl = url + productId
-let addToCart = document.getElementById("addToCart")
+console.log(productUrl)
+const addToCart = document.getElementById("addToCart")
+const arrayProduct =  JSON.parse(localStorage.getItem('cart'))
 
 
 let showDetails = (() => {
     fetch(productUrl)
     .then(res => res.json())
-    .then((product) => {
+    .then((product) => { console.log(product.imageUrl)
+        console.log(productUrl)
     let image = document.querySelector(".item__img")
     let title = document.getElementById("title")
     let price = document.getElementById("price")
     let description = document.getElementById("description")
     let color = document.getElementById("colors")
+
+
 
     image.innerHTML = `<img src="${product.imageUrl}" alt="${product.altTxt}">`
     title.innerHTML = product.name
@@ -28,6 +33,7 @@ let showDetails = (() => {
 
 showDetails();
 
+
 addToCart.addEventListener("click", (event) =>{
     const colors = document.getElementById("colors").value
     const quantity = parseInt(document.getElementById("quantity").value)
@@ -39,31 +45,42 @@ addToCart.addEventListener("click", (event) =>{
     const item = localStorage.getItem('cart');
     let itemAlreadyExist = false;
 
+    if (newItem.quantity >= 100) {
+        newItem.quantity = 100
+    }
+
     if (!item) return localStorage.setItem('cart', JSON.stringify([{ ...newItem }]));
     
     const newCart = JSON.parse(item).map((element) => {
         const elementSpread = { ...element };
         if (elementSpread.colors === newItem.colors && elementSpread.id === newItem.id) {
             elementSpread.quantity = elementSpread.quantity + newItem.quantity;
+            if (elementSpread.quantity >= 100) {
+                elementSpread.quantity = 100
+            }
             itemAlreadyExist = true;
         }
-
         return elementSpread;
     });
+    
+    document.location.reload();
+    window.location.href = "./cart.html"
 
     if (!itemAlreadyExist) newCart.push({ ...newItem });
     return localStorage.setItem('cart', JSON.stringify(newCart));
-})
+   
+});
+
 
 
 
 
 // addToCart.onclick = () =>{
-    // let name = document.getElementById("title").textContent
-    // let colors = document.getElementById("colors").value
-    // let quantity = document.getElementById("quantity").value
-    // let colorName = name +" "+ colors
-    // let price = document.getElementById("price").textContent
+//     let name = document.getElementById("title").textContent
+//     let colors = document.getElementById("colors").value
+//     let quantity = document.getElementById("quantity").value
+//     let colorName = name +" "+ colors
+//     let price = document.getElementById("price").textContent
     
     
 //     if (localStorage.getItem(colorName)){
