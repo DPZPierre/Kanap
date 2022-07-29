@@ -2,12 +2,11 @@ const parsedUrl= new URL (window.location.href)
 const productId = parsedUrl.searchParams.get("id")
 const url = "http://localhost:3000/api/products/"
 const productUrl = url + productId
-console.log(productUrl)
 const addToCart = document.getElementById("addToCart")
 const arrayProduct =  JSON.parse(localStorage.getItem('cart'))
 
 
-let showDetails = (() => {
+function showDetails() {
     fetch(productUrl)
     .then(res => res.json())
     .then((product) => { console.log(product.imageUrl)
@@ -28,7 +27,7 @@ let showDetails = (() => {
     for (i = 0; i < product.colors.length; i++){
         color.innerHTML += `<option value="${product.colors[i]}">${product.colors[i]}</option>`
     }
-    })});
+    })};
 
 
 showDetails();
@@ -46,7 +45,11 @@ addToCart.addEventListener("click", (event) =>{
     let itemAlreadyExist = false;
 
     if (newItem.quantity >= 100) {
-        newItem.quantity = 100
+        newItem.quantity = 100;
+    } 
+    if (newItem.quantity == 0 || newItem.colors === "") {
+        alert('Votre panier est incomplet, veuillez sélectionner une quantité et une couleur')
+        return
     }
 
     if (!item) return localStorage.setItem('cart', JSON.stringify([{ ...newItem }]));
