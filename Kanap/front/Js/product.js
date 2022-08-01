@@ -10,7 +10,6 @@ function showDetails() {
     fetch(productUrl)
     .then(res => res.json())
     .then((product) => { console.log(product.imageUrl)
-        console.log(productUrl)
     let image = document.querySelector(".item__img")
     let title = document.getElementById("title")
     let price = document.getElementById("price")
